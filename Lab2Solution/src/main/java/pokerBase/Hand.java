@@ -126,6 +126,32 @@ public class Hand {
 		return null;
 	}
 
+	public static boolean isHandFiveOfAKind(Hand h, HandScore hs){
+		boolean isFiveOfAKind = false;
+
+		if (h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank() == h.getCardsInHand()
+				.get(eCardNo.FifthCard.getCardNo()).geteRank()) {
+			isFiveOfAKind= true;
+			hs.setHandStrength(eHandStrength.FiveOfAKind.getHandStrength());
+			hs.setHiHand(h.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank().getiRankNbr());
+			hs.setLoHand(0);
+
+		}
+		return isFiveOfAKind;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
 	public static boolean isHandRoyalFlush(Hand h, HandScore hs) {
 
 		Card c = new Card();
