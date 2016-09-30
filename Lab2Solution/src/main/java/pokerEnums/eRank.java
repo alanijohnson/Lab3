@@ -15,7 +15,8 @@ public enum eRank {
 	JACK(11), 
 	QUEEN(12), 
 	KING(13), 
-	ACE(14);
+	ACE(14),
+	JOKER(99);
 
 	//TODO - Lab 3 - Add Joker as a new rank Joker(99)
 	private int iRankNbr;
