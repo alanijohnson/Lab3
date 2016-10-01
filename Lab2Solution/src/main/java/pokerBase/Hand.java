@@ -123,6 +123,64 @@ public class Hand {
 
 	private static ArrayList<Hand> ExplodeHands(ArrayList<Hand> Hands) {
 		// TODO - Lab3 Implement this
+		int BestHandStrength = 0;
+		Hand BestHand = new Hand();
+		Deck StandardDeck = new Deck();
+		for (Hand SingleHand: Hands){
+			//exploade each hand
+			
+			for (Card card1: StandardDeck.getCardsinDeck()){
+				//set value of card1
+				if (SingleHand.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).isbWild() || 
+						SingleHand.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).getiCardNbr() == eRank.JOKER.getiRankNbr()){
+					SingleHand.getCardsInHand().set(eCardNo.FirstCard.getCardNo(), card1);
+				}
+				
+				for(Card card2: StandardDeck.getCardsinDeck()){
+					//set value of card2
+					if (SingleHand.getCardsInHand().get(eCardNo.SecondCard.getCardNo()).isbWild() || 
+							SingleHand.getCardsInHand().get(eCardNo.SecondCard.getCardNo()).getiCardNbr() == eRank.JOKER.getiRankNbr()){
+						SingleHand.getCardsInHand().set(eCardNo.SecondCard.getCardNo(), card2);
+					}
+					
+					for (Card card3: StandardDeck.getCardsinDeck()){
+						//set value of card3
+						if (SingleHand.getCardsInHand().get(eCardNo.ThirdCard.getCardNo()).isbWild() || 
+								SingleHand.getCardsInHand().get(eCardNo.ThirdCard.getCardNo()).getiCardNbr() == eRank.JOKER.getiRankNbr()){
+							SingleHand.getCardsInHand().set(eCardNo.ThirdCard.getCardNo(), card3);
+						}
+						
+						for (Card card4: StandardDeck.getCardsinDeck()){
+							//set value of card4
+							if (SingleHand.getCardsInHand().get(eCardNo.FourthCard.getCardNo()).isbWild() || 
+									SingleHand.getCardsInHand().get(eCardNo.FourthCard.getCardNo()).getiCardNbr() == eRank.JOKER.getiRankNbr()){
+								SingleHand.getCardsInHand().set(eCardNo.FourthCard.getCardNo(), card4);
+							}
+							
+							for (Card card5: StandardDeck.getCardsinDeck()){
+								//set value of card5
+								if (SingleHand.getCardsInHand().get(eCardNo.FifthCard.getCardNo()).isbWild() || 
+										SingleHand.getCardsInHand().get(eCardNo.FifthCard.getCardNo()).getiCardNbr() == eRank.JOKER.getiRankNbr()){
+									SingleHand.getCardsInHand().set(eCardNo.FifthCard.getCardNo(), card5);
+								}
+								
+								//TODO Add the scoring portion.
+								//scorehand
+								SingleHand.EvaulateHand();
+								
+								//if handscore is greater than besthandstrength
+								//replace besthand with new deck
+								//replace besthandstrength with newhandstrength
+								
+							}
+						}
+					}
+				}
+				
+			}
+			
+		//setbesthand as singleHand	
+		}
 		return null;
 	}
 
@@ -138,18 +196,7 @@ public class Hand {
 
 		}
 		return isFiveOfAKind;
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+				
 	}
 	
 	public static boolean isHandRoyalFlush(Hand h, HandScore hs) {

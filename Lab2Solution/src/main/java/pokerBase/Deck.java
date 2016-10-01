@@ -47,8 +47,14 @@ public class Deck {
 	 
 		
 	}
+	
 	public Card Draw(){
 		//TODO Lab 3 - Implement exception handling for overdraw
 		return deckCards.remove(0);
 	}
+
+	public ArrayList<Card> getCardsinDeck(){
+		return deckCards;
+	}
+	
 }
