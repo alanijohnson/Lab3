@@ -123,8 +123,7 @@ public class Hand {
 
 	private static ArrayList<Hand> ExplodeHands(ArrayList<Hand> Hands) {
 		// TODO - Lab3 Implement this
-		int BestHandStrength = 0;
-		Hand BestHand = new Hand();
+		ArrayList<Hand> ExplodedHands = ArrayList<Hand>();
 		Deck StandardDeck = new Deck();
 		for (Hand SingleHand: Hands){
 			//exploade each hand
@@ -165,12 +164,8 @@ public class Hand {
 								}
 								
 								//TODO Add the scoring portion.
-								//scorehand
-								SingleHand.EvaulateHand();
-								
-								//if handscore is greater than besthandstrength
-								//replace besthand with new deck
-								//replace besthandstrength with newhandstrength
+								//scorehand reflection
+								ExplodedHands.add(SingleHand);
 								
 							}
 						}
@@ -179,9 +174,8 @@ public class Hand {
 				
 			}
 			
-		//setbesthand as singleHand	
 		}
-		return null;
+		return ExplodedHands;
 	}
 
 	public static boolean isHandFiveOfAKind(Hand h, HandScore hs){
