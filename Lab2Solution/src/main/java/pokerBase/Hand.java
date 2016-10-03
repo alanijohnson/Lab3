@@ -123,7 +123,7 @@ public class Hand {
 
 	private static ArrayList<Hand> ExplodeHands(ArrayList<Hand> Hands) {
 		// TODO - Lab3 Implement this
-		ArrayList<Hand> ExplodedHands = ArrayList<Hand>();
+		ArrayList<Hand> ExplodedHands = new ArrayList<Hand>();
 		Deck StandardDeck = new Deck();
 		for (Hand SingleHand: Hands){
 			//exploade each hand
