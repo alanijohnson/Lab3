@@ -36,9 +36,9 @@ public class Deck {
 	public Deck(int NbrOfJokers, ArrayList<Card> Wilds) {
 		this(NbrOfJokers);
 		// TODO Lab3 - Implement joker and wild constructor
-		for (Card DeckCard : deckCards) {
-			for (Card WildCard : Wilds) {
-				if (DeckCard == WildCard) {
+		for (Card WildCard : Wilds) {
+			for (Card DeckCard : deckCards) {
+				if ((DeckCard.geteRank() == WildCard.geteRank()) && DeckCard.geteSuit() == WildCard.geteSuit()) {
 					DeckCard.setbWild(true);
 				}
 			}

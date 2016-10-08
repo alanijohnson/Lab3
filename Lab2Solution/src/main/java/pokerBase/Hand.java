@@ -20,6 +20,10 @@ public class Hand {
 	private boolean bScored;
 	private HandScore hs;
 
+	public Hand() {
+
+	}
+
 	private ArrayList<Card> getCardsInHand() {
 		return CardsInHand;
 	}
@@ -92,7 +96,7 @@ public class Hand {
 	static Hand EvaluateHand(Hand h) throws HandException {
 
 		// Sort the colleciton (by hand rank)
-		Collections.sort(h.getCardsInHand());
+		// Collections.sort(h.getCardsInHand());
 
 		// TODO - Lab 3 Here's the code to throw the HandException
 		// TODO - Implement HandException
@@ -131,8 +135,8 @@ public class Hand {
 					}
 				}
 
-				hEval.bScored = true;
-				hEval.hs = hs;
+				h.bScored = true;
+				h.hs = hs;
 
 			} catch (ClassNotFoundException x) {
 				x.printStackTrace();
@@ -168,64 +172,92 @@ public class Hand {
 	private static ArrayList<Hand> ExplodeHands(ArrayList<Hand> Hands) {
 		// TODO - Lab3 Implement this
 		Hand OriginalHand = Hands.get(0);
-		Hand tempHand = OriginalHand;
+		// Hand tempHand = OriginalHand;
 		ArrayList<Hand> ExplodedHands = new ArrayList<Hand>();
 		Deck StandardDeck = new Deck();
 
-		for (Card card1 : StandardDeck.getCardsinDeck()) {
-			// set value of card1
-			if (OriginalHand.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).isbWild() || OriginalHand
-					.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).getiCardNbr() == eRank.JOKER.getiRankNbr()) {
-				tempHand.getCardsInHand().set(eCardNo.FirstCard.getCardNo(), card1);
-			}
+		ExplodedHands.add(Hands.get(0));
 
-			for (Card card2 : StandardDeck.getCardsinDeck()) {
-				// set value of card2
-				if (OriginalHand.getCardsInHand().get(eCardNo.SecondCard.getCardNo()).isbWild()
-						|| OriginalHand.getCardsInHand().get(eCardNo.SecondCard.getCardNo())
-								.getiCardNbr() == eRank.JOKER.getiRankNbr()) {
-					tempHand.getCardsInHand().set(eCardNo.SecondCard.getCardNo(), card2);
-				}
-
-				for (Card card3 : StandardDeck.getCardsinDeck()) {
-					// set value of card3
-					if (OriginalHand.getCardsInHand().get(eCardNo.ThirdCard.getCardNo()).isbWild()
-							|| OriginalHand.getCardsInHand().get(eCardNo.ThirdCard.getCardNo())
-									.getiCardNbr() == eRank.JOKER.getiRankNbr()) {
-						tempHand.getCardsInHand().set(eCardNo.ThirdCard.getCardNo(), card3);
-					}
-
-					for (Card card4 : StandardDeck.getCardsinDeck()) {
-						// set value of card4
-						if (OriginalHand.getCardsInHand().get(eCardNo.FourthCard.getCardNo()).isbWild()
-								|| OriginalHand.getCardsInHand().get(eCardNo.FourthCard.getCardNo())
-										.getiCardNbr() == eRank.JOKER.getiRankNbr()) {
-							tempHand.getCardsInHand().set(eCardNo.FourthCard.getCardNo(), card4);
-						}
-
-						for (Card card5 : StandardDeck.getCardsinDeck()) {
-							// set value of card5
-							if (OriginalHand.getCardsInHand().get(eCardNo.FifthCard.getCardNo()).isbWild()
-									|| OriginalHand.getCardsInHand().get(eCardNo.FifthCard.getCardNo())
-											.getiCardNbr() == eRank.JOKER.getiRankNbr()) {
-								tempHand.getCardsInHand().set(eCardNo.FifthCard.getCardNo(), card5);
-							}
-
-							ExplodedHands.add(tempHand);
-
-						}
-					}
-				}
-			}
-
+		for (int card = 0; card < 5; card++) {
+			ExplodedHands = SubstituteCard(card, ExplodedHands);
 		}
-
-		if (ExplodedHands.isEmpty()) {
-			ExplodedHands.add(OriginalHand);
-		}
-
+		
 		return ExplodedHands;
 	}
+
+	private static ArrayList<Hand> SubstituteCard(int CardPosition, ArrayList<Hand> hands) {
+		ArrayList<Hand> CreatedHands = new ArrayList<Hand>();
+		Deck StandardDeck = new Deck();
+
+		for (Hand h : hands) {
+			if (h.getCardsInHand().get(CardPosition).geteRank() == pokerEnums.eRank.JOKER
+					|| h.getCardsInHand().get(CardPosition).isbWild()) {
+				for (Card StandardCard : StandardDeck.getCardsinDeck()) {
+					Hand newHand = new Hand();
+					for (int position = 0; position < 5; position++) {
+						if (CardPosition == position) {
+							newHand.AddToCardsInHand(StandardCard);
+						} else {
+							newHand.AddToCardsInHand(h.getCardsInHand().get(position));
+						}
+					}
+					CreatedHands.add(newHand);
+				}
+			} else {
+				CreatedHands.add(h);
+			}
+		}
+		return CreatedHands;
+	}
+
+	/*
+	 * for (Card card1 : StandardDeck.getCardsinDeck()) { // set value of card1
+	 * if
+	 * (OriginalHand.getCardsInHand().get(eCardNo.FirstCard.getCardNo()).isbWild
+	 * () || OriginalHand
+	 * .getCardsInHand().get(eCardNo.FirstCard.getCardNo()).geteRank() ==
+	 * eRank.JOKER) {
+	 * tempHand.getCardsInHand().set(eCardNo.FirstCard.getCardNo(), card1); }
+	 * 
+	 * for (Card card2 : StandardDeck.getCardsinDeck()) { // set value of card2
+	 * if (OriginalHand.getCardsInHand().get(eCardNo.SecondCard.getCardNo()).
+	 * isbWild() ||
+	 * OriginalHand.getCardsInHand().get(eCardNo.SecondCard.getCardNo())
+	 * .geteRank()== eRank.JOKER) {
+	 * tempHand.getCardsInHand().set(eCardNo.SecondCard.getCardNo(), card2); }
+	 * 
+	 * for (Card card3 : StandardDeck.getCardsinDeck()) { // set value of card3
+	 * if
+	 * (OriginalHand.getCardsInHand().get(eCardNo.ThirdCard.getCardNo()).isbWild
+	 * () || OriginalHand.getCardsInHand().get(eCardNo.ThirdCard.getCardNo())
+	 * .geteRank() == eRank.JOKER) {
+	 * tempHand.getCardsInHand().set(eCardNo.ThirdCard.getCardNo(), card3); }
+	 * 
+	 * for (Card card4 : StandardDeck.getCardsinDeck()) { // set value of card4
+	 * if (OriginalHand.getCardsInHand().get(eCardNo.FourthCard.getCardNo()).
+	 * isbWild() ||
+	 * OriginalHand.getCardsInHand().get(eCardNo.FourthCard.getCardNo())
+	 * .geteRank() == eRank.JOKER) {
+	 * tempHand.getCardsInHand().set(eCardNo.FourthCard.getCardNo(), card4); }
+	 * 
+	 * for (Card card5 : StandardDeck.getCardsinDeck()) { // set value of card5
+	 * if
+	 * (OriginalHand.getCardsInHand().get(eCardNo.FifthCard.getCardNo()).isbWild
+	 * () ||
+	 * OriginalHand.getCardsInHand().get(eCardNo.FifthCard.getCardNo()).geteRank
+	 * () == eRank.JOKER) {
+	 * tempHand.getCardsInHand().set(eCardNo.FifthCard.getCardNo(), card5); }
+	 * 
+	 * ExplodedHands.add(tempHand);
+	 * 
+	 * } } } }
+	 * 
+	 * }
+	 * 
+	 * if (ExplodedHands.isEmpty()) { ExplodedHands.add(OriginalHand); }
+	 * 
+	 * return ExplodedHands; }
+	 */
 
 	public static boolean isHandFiveOfAKind(Hand h, HandScore hs) {
 		boolean isFiveOfAKind = false;
