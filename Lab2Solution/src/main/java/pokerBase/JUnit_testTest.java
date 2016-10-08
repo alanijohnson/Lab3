@@ -6,6 +6,7 @@ import org.junit.Test;
 import pokerEnums.eRank;
 import pokerEnums.eSuit;
 import pokerExceptions.DeckException;
+import pokerExceptions.HandException;
 
 import org.junit.Ignore;
 import static org.junit.Assert.assertEquals;
@@ -323,8 +324,25 @@ public class JUnit_testTest {
 
 	   hand1.EvaulateHand();
 	   assertEquals(hand1.isbScored(),true);
+	   //assertEquals(hand1.getHs().getHandStrength(),20);
+	   
+	   Hand hand21 = new Hand();
+	   hand21.AddToCardsInHand(new Card(pokerEnums.eSuit.CLUBS,pokerEnums.eRank.ACE));
+	   hand21.AddToCardsInHand(new Card(pokerEnums.eSuit.CLUBS,pokerEnums.eRank.KING));
+	   hand21.AddToCardsInHand(new Card(pokerEnums.eSuit.JOKER,pokerEnums.eRank.JOKER));
+	   hand21.AddToCardsInHand(new Card(pokerEnums.eSuit.CLUBS,pokerEnums.eRank.JACK));
+	   hand21.AddToCardsInHand(new Card(pokerEnums.eSuit.JOKER,pokerEnums.eRank.JOKER));
+
+	   hand21.EvaulateHand();
+	   assertEquals(hand21.getHs().getHandStrength(),100);
    }
    
-		   
+   @Test (expected = pokerExceptions.HandException.class)
+   public void test_HandException() throws HandException{
+	   Hand hand1 = new Hand();
+	   hand1.AddToCardsInHand(new Card(pokerEnums.eSuit.CLUBS,pokerEnums.eRank.ACE));
+	   hand1.AddToCardsInHand(new Card(pokerEnums.eSuit.CLUBS,pokerEnums.eRank.NINE));
+	   hand1.EvaulateHand();
+   }
    }
 

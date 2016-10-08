@@ -135,8 +135,8 @@ public class Hand {
 					}
 				}
 
-				h.bScored = true;
-				h.hs = hs;
+				hEval.bScored = true;
+				hEval.hs = hs;
 
 			} catch (ClassNotFoundException x) {
 				x.printStackTrace();
@@ -157,10 +157,11 @@ public class Hand {
 		// TODO - Lab 3. ExplodedHands has a bunch of hands.
 		// TODO need comparator for sorting hands
 		Collections.sort(ExplodedHands, Hand.HandRank);
-
+		h.bScored = true;
+		h.hs = ExplodedHands.get(0).getHs();
 		// Either 1, 52, 2
 		// return a
-		return h;
+		return ExplodedHands.get(0);
 	}
 
 	/**
