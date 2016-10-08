@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import pokerEnums.eRank;
 import pokerEnums.eSuit;
+import pokerExceptions.DeckException;
 
 public class Deck {
 
@@ -19,7 +20,6 @@ public class Deck {
 					deckCards.add(new Card(eSuit, eRank, iCardNbr++));
 				}
 			}
-
 		}
 		Collections.shuffle(deckCards);
 	}
@@ -46,20 +46,18 @@ public class Deck {
 
 	}
 
-	public Card Draw() {
+	public Card Draw() throws DeckException {
 		// TODO Lab 3 - Implement exception handling for overdraw
-		return deckCards.remove(0);
+		if (deckCards.size() < 1) {
+			throw new DeckException();
+		} else {
+			return deckCards.remove(0);
+		}
 	}
 
 	public ArrayList<Card> getCardsinDeck() {
 		return deckCards;
 	}
-	class DeckException extends Exception {
 
-		public Card Draw() throws DeckException {
-			if (deckCards.size() < 1)
-				throw new DeckException();
-			return deckCards.remove(0);
-		}
-	}
+	
 }

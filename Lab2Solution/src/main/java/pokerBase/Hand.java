@@ -7,9 +7,12 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import pokerEnums.eCardNo;
+import pokerEnums.eHandExceptionType;
 import pokerEnums.eHandStrength;
 import pokerEnums.eRank;
 import pokerEnums.eSuit;
+import pokerExceptions.HandException;
+import pokerExceptions.exHand;
 
 public class Hand {
 
@@ -43,12 +46,40 @@ public class Hand {
 		}
 
 	}
-	
-	public static Hand PickBestHand(ArrayList<Hand> Hands) throws exHand{
-	Collections.sort(Hands, Hand.HandRank);	
-	return Hands.get(0);
-	}
 
+	public static Hand PickBestHand(ArrayList<Hand> Hands) throws exHand {
+		Collections.sort(Hands, Hand.HandRank);
+		if (Hands.size() > 1) {
+			if (Hands.get(0).getHs().getHandStrength() == Hands.get(1).getHs().getHandStrength()) {
+				if (Hands.get(0).getHs().getHiHand() == Hands.get(1).getHs().getHiHand()) {
+					if (Hands.get(0).getHs().getLoHand() == Hands.get(1).getHs().getLoHand()) {
+						if (Hands.get(0).getHs().getKickers().size() == 0) {
+							throw new exHand();
+						} else {
+							Collections.sort(Hands.get(0).getHs().getKickers(), Card.CardRank);
+							Collections.sort(Hands.get(1).getHs().getKickers(), Card.CardRank);
+
+							for (int i = 0; i < Hands.get(0).getHs().getKickers().size(); i++) {
+								if (Hands.get(0).getHs().getKickers().get(i).geteRank() != Hands.get(1).getHs()
+										.getKickers().get(i).geteRank()) {
+									return Hands.get(0);
+								}
+							}
+							throw new exHand();
+						}
+					} else {
+						return Hands.get(0);
+					}
+				} else {
+					return Hands.get(0);
+				}
+			} else {
+				return Hands.get(0);
+			}
+		} else {
+			return Hands.get(0);
+		}
+	}
 
 	/**
 	 * <b>EvaluateHand</b> is a static method that will score a given Hand of
@@ -58,7 +89,7 @@ public class Hand {
 	 * @return
 	 * @throws HandException
 	 */
-	static Hand EvaluateHand(Hand h) throws Exception {
+	static Hand EvaluateHand(Hand h) throws HandException {
 
 		// Sort the colleciton (by hand rank)
 		Collections.sort(h.getCardsInHand());
@@ -78,7 +109,7 @@ public class Hand {
 		for (Hand hEval : ExplodedHands) {
 
 			if (hEval.getCardsInHand().size() != 5) {
-				throw new HandException(hEval, eHandExceptionType.ShortHand);
+				throw new HandException(hEval);
 			}
 			HandScore hs = new HandScore();
 			try {
